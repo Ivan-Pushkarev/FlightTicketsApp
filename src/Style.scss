@@ -1,0 +1,131 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700;800&display=swap');
+* {
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+body{
+  background-color: #E5E5E5;
+}
+
+.sort-button-wrapper {
+  height: 50px;
+  border: 1px solid #DFE5EC;
+  margin-bottom: 17px;
+
+  button {
+    border: 1px solid #DFE5EC;
+    width: 50%;
+    height: 100%;
+    background-color: white;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #4A4A4A;
+  }
+
+  button.active {
+    background-color: #2196F3;
+    color: white;
+  }
+}
+
+.show-more {
+  height: 50px;
+  width: 100%;
+  background: #2196F3;
+  border: 1px solid #DFE5EC;
+  border-radius: 5px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
+
+.filters-wrapper {
+  width:80%;
+  background-color: white;
+  height: 251px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px 0 20px 0;
+  .title {
+    padding: 0 20px 0 20px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #4A4A4A;
+  }
+  .filter {
+    width: 100%;
+    text-align: left;
+    padding: 9px 0 9px 20px;
+    span {
+      margin-left: 10px;
+      font-weight: normal;
+      font-size: 13px;
+      line-height: 20px;
+      color: #4A4A4A;
+    }
+    &:hover{
+      cursor: pointer;
+      background: #F1FCFF;
+    }
+  }
+
+}
+
+.ticket {
+  text-align: left;
+  margin-bottom: 23px;
+  height: 184px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  &-price {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 1px;
+    color: #2196F3;
+  }
+  .top-row {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #A0B0B9;
+  }
+  .bottom-row {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 21px;
+    color: #4A4A4A;
+  }
+}
+//pics.avs.io/99/36/{EY}.png
