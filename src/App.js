@@ -75,6 +75,7 @@ function App() {
         <div className="container py-5 text-center">
             <img src={airPlane} alt="airplane logo"/>
             <div className="row mt-5">
+                <div className=" col-11 text-end mb-2">Всего найденно билетов: {list.length}</div>
                 <CheckBoxFilters stops={stops} setStops={setStops}/>
                 <div className='col-6'>
                     <div className="sort-button-wrapper">
