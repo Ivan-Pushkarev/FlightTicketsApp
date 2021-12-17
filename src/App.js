@@ -3,11 +3,11 @@ import airPlane from './Images/airplaneLogo.png';
 
 import CheckBoxFilters from "./CheckBoxFilters";
 import Ticket from "./TicketsList";
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import axios from "axios";
 
 
-const URL = 'https://front-test.beta.aviasales.ru/search'
+const SearchIdURL = 'https://front-test.beta.aviasales.ru/search'
 const initialStops = {
     all: false,
     none: false,
@@ -22,35 +22,29 @@ function App() {
     const [sortOption, setSortOption] = useState('Cheapest')
     const [stops, setStops] = useState(initialStops)
 
-    const fetchData= useCallback(async (URL) => {
-       try {
-           const searchId = await axios.get(URL)
-           const response = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId.data.searchId}`)
-           console.log(response.data)
-           setList([...list, ...response.data.tickets])
-       } catch {
-           const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
-           if(repeat) fetchData(URL);
-       }
-   },[])
-
     useEffect(() => {
-            fetchData(URL).then(() => {
-                console.log('data downloaded')
+
+        async function fetchData (url) {
+            try {
+                const result = await  axios.get(url)
+                console.log('result', result.data)
+                setList(prev=> prev.concat(result.data.tickets))
+                if(!result.data.stop) fetchData(url)
+            } catch {
+                const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
+                if(repeat) fetchData(url);
+            }
+        }
+
+        axios.get(SearchIdURL)
+            .then((res => {
+                const url = `https://front-test.beta.aviasales.ru/tickets?searchId=${res.data.searchId}`
+                fetchData(url)
+            }))
+            .catch(err => {
+                console.log(err)
             })
-        }, [fetchData]
-    )
-    // const fetchData = async (URL) => {
-    //     try {
-    //         const searchId = await axios.get(URL)
-    //         const response = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId.data.searchId}`)
-    //         console.log(response.data)
-    //         setList([...list, ...response.data.tickets])
-    //     } catch {
-    //         const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
-    //         if(repeat) fetchData(URL);
-    //     }
-    // }
+    }, [])
 
     const filterByShowNumber = (el, i) => {
         return i < showTickets
@@ -64,7 +58,7 @@ function App() {
             if (stops.two) allowedNumberOfStops.push(2)
             if (stops.one) allowedNumberOfStops.push(1)
             if (stops.none) allowedNumberOfStops.push(0)
-            return allowedNumberOfStops.some(el=> el=== flight.segments[0].stops.length)
+            return allowedNumberOfStops.some(el => el === flight.segments[0].stops.length)
         } else return true
     }
 
