@@ -3,7 +3,7 @@ import airPlane from './Images/airplaneLogo.png';
 
 import CheckBoxFilters from "./CheckBoxFilters";
 import Ticket from "./TicketsList";
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 
 
@@ -22,24 +22,35 @@ function App() {
     const [sortOption, setSortOption] = useState('Cheapest')
     const [stops, setStops] = useState(initialStops)
 
+    const fetchData= useCallback(async (URL) => {
+       try {
+           const searchId = await axios.get(URL)
+           const response = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId.data.searchId}`)
+           console.log(response.data)
+           setList([...list, ...response.data.tickets])
+       } catch {
+           const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
+           if(repeat) fetchData(URL);
+       }
+   },[])
+
     useEffect(() => {
             fetchData(URL).then(() => {
                 console.log('data downloaded')
             })
-        }, []
+        }, [fetchData]
     )
-
-    const fetchData = async (URL) => {
-        try {
-            const searchId = await axios.get(URL)
-            const response = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId.data.searchId}`)
-            console.log(response.data)
-            setList([...list, ...response.data.tickets])
-        } catch {
-            const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
-            if(repeat) fetchData(URL);
-        }
-    }
+    // const fetchData = async (URL) => {
+    //     try {
+    //         const searchId = await axios.get(URL)
+    //         const response = await axios.get(`https://front-test.beta.aviasales.ru/tickets?searchId=${searchId.data.searchId}`)
+    //         console.log(response.data)
+    //         setList([...list, ...response.data.tickets])
+    //     } catch {
+    //         const repeat = window.confirm("Ошибка соединения с сервером! Хотите повторить попытку?")
+    //         if(repeat) fetchData(URL);
+    //     }
+    // }
 
     const filterByShowNumber = (el, i) => {
         return i < showTickets
