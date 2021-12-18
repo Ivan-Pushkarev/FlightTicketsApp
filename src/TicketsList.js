@@ -1,5 +1,5 @@
 import React from 'react';
-import s7Logo from './Images/S7Logo.png';
+import S7 from './Images/S7Logo.png';
 import EK from './Images/{EK}.png';
 import EY from './Images/{EY}.png';
 import FV from './Images/{FV}.png';
@@ -11,17 +11,7 @@ function Ticket(props) {
     const {ticket} = props
     const [firstFlight, returnFlight] = ticket.segments
 
-    const companyLogo = (code) => {
-        switch (code) {
-            case 'EK': return EK;
-            case 'EY': return EY;
-            case 'FV': return FV;
-            case 'MH': return MH;
-            case 'SU': return SU;
-            case 'TG': return TG;
-            default: return s7Logo;
-        }
-    }
+    const companyLogos = { EK, EY, FV, MH, SU, TG, S7  }
 
     const flightDuration = (time) => {
         const hours = Math.trunc( time/60)
@@ -57,7 +47,7 @@ function Ticket(props) {
                 <div className="ticket-price">
                     {ticket.price} P
                 </div>
-                <img src={companyLogo(ticket.carrier)} alt="s7 logo"/>
+                <img src={companyLogos[ticket.carrier]} alt="s7 logo"/>
             </div>
             <div className="row">
                 <div className="col-4 mt-2">
